@@ -10,6 +10,7 @@ import {
   Link,
   Text,
   useColorModeValue,
+  Badge,
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/card/Card.js";
@@ -18,10 +19,22 @@ import React, { useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 
 export default function NFT(props) {
-  const { image, name, author, bidders, download, currentbid } = props;
+  const { 
+    image, 
+    name, 
+    author, 
+    bidders, 
+    download, 
+    currentPrice, 
+    originalPrice, 
+    discount, 
+    buttonText = "Place Bid" 
+  } = props;
+  
   const [like, setLike] = useState(false);
   const textColor = useColorModeValue("navy.700", "white");
   const textColorBid = useColorModeValue("brand.500", "white");
+  
   return (
     <Card p='20px'>
       <Flex direction={{ base: "column" }} justify='center'>
@@ -32,6 +45,20 @@ export default function NFT(props) {
             h={{ base: "100%", "3xl": "100%" }}
             borderRadius='20px'
           />
+          {discount && (
+            <Badge
+              position='absolute'
+              top='10px'
+              left='10px'
+              colorScheme='green'
+              fontSize='sm'
+              px='8px'
+              py='4px'
+              borderRadius='full'
+              fontWeight='bold'>
+              {discount} OFF
+            </Badge>
+          )}
           <Button
             position='absolute'
             bg='white'
@@ -121,9 +148,25 @@ export default function NFT(props) {
               "2xl": "row",
             }}
             mt='25px'>
-            <Text fontWeight='700' fontSize='sm' color={textColorBid}>
-              Current Bid: {currentbid}
-            </Text>
+            <Flex direction='column'>
+              <Text fontWeight='700' fontSize='sm' color={textColorBid} mb='5px'>
+                Current Price
+              </Text>
+              <Flex align='center' gap='10px'>
+                <Text fontWeight='700' fontSize='lg' color={textColor}>
+                  {currentPrice}
+                </Text>
+                {originalPrice && (
+                  <Text
+                    fontWeight='400'
+                    fontSize='sm'
+                    color='secondaryGray.600'
+                    textDecoration='line-through'>
+                    {originalPrice}
+                  </Text>
+                )}
+              </Flex>
+            </Flex>
             <Link
               href={download}
               mt={{
@@ -141,7 +184,7 @@ export default function NFT(props) {
                 borderRadius='70px'
                 px='24px'
                 py='5px'>
-                Place Bid
+                {buttonText}
               </Button>
             </Link>
           </Flex>

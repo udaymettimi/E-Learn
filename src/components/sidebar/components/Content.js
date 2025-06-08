@@ -9,23 +9,34 @@ import React from "react";
 // FUNCTIONS
 
 function SidebarContent(props) {
-  const { routes } = props;
+  const { routes, isCollapsed = false } = props;
   // SIDEBAR
   return (
-    <Flex direction='column' height='100%' pt='25px' px="16px" borderRadius='30px'>
-      <Brand />
+    <Flex 
+      direction='column' 
+      height='100%' 
+      pt='25px' 
+      px={isCollapsed ? "8px" : "12px"}
+      borderRadius='30px' 
+      maxW={isCollapsed ? '80px' : '300px'} 
+      minW={isCollapsed ? '60px' : '280px'}
+      transition="all 0.3s ease"
+    >
+      <Brand isCollapsed={isCollapsed} />
       <Stack direction='column' mb='auto' mt='8px'>
-        <Box ps='20px' pe={{ md: "16px", "2xl": "1px" }}>
-          <Links routes={routes} />
+        <Box ps={isCollapsed ? '4px' : '12px'} pe={isCollapsed ? '4px' : { md: "8px", "2xl": "1px" }}>
+          <Links routes={routes} isCollapsed={isCollapsed} />
         </Box>
       </Stack>
 
-      <Box
-        mt='60px'
-        mb='40px'
-        borderRadius='30px'>
-        <SidebarCard />
-      </Box>
+      {!isCollapsed && (
+        <Box
+          mt='60px'
+          mb='40px'
+          borderRadius='30px'>
+          <SidebarCard />
+        </Box>
+      )}
     </Flex>
   );
 }

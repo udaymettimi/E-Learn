@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // chakra imports
 import {
@@ -12,6 +12,7 @@ import {
   useDisclosure,
   DrawerContent,
   DrawerCloseButton,
+  IconButton,
 } from "@chakra-ui/react";
 import Content from "components/sidebar/components/Content";
 import {
@@ -24,11 +25,13 @@ import PropTypes from "prop-types";
 
 // Assets
 import { IoMenuOutline } from "react-icons/io5";
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
 function Sidebar(props) {
   const { routes } = props;
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  let variantChange = "0.2s linear";
+  let variantChange = "0.3s ease";
   let shadow = useColorModeValue(
     "14px 17px 40px 4px rgba(112, 144, 176, 0.08)",
     "unset"
@@ -36,6 +39,7 @@ function Sidebar(props) {
   // Chakra Color Mode
   let sidebarBg = useColorModeValue("white", "navy.800");
   let sidebarMargins = "0px";
+  let toggleButtonColor = useColorModeValue("gray.400", "white");
 
   // SIDEBAR
   return (
@@ -43,18 +47,36 @@ function Sidebar(props) {
       <Box
         bg={sidebarBg}
         transition={variantChange}
-        w='300px'
+        w={isCollapsed ? '80px' : '300px'}
         h='100vh'
         m={sidebarMargins}
         minH='100%'
         overflowX='hidden'
-        boxShadow={shadow}>
+        boxShadow={shadow}
+        position="relative">
+        
+        {/* Toggle Button */}
+        <IconButton
+          icon={<Icon as={isCollapsed ? MdChevronRight : MdChevronLeft} />}
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          position="absolute"
+          top="20px"
+          right="-12px"
+          size="sm"
+          borderRadius="full"
+          bg={sidebarBg}
+          color={toggleButtonColor}
+          boxShadow={shadow}
+          zIndex={10}
+          _hover={{ bg: useColorModeValue("gray.50", "navy.700") }}
+        />
+
         <Scrollbars
           autoHide
           renderTrackVertical={renderTrack}
           renderThumbVertical={renderThumb}
           renderView={renderView}>
-          <Content routes={routes} />
+          <Content routes={routes} isCollapsed={isCollapsed} />
         </Scrollbars>
       </Box>
     </Box>
@@ -105,7 +127,7 @@ export function SidebarResponsive(props) {
               renderTrackVertical={renderTrack}
               renderThumbVertical={renderThumb}
               renderView={renderView}>
-              <Content routes={routes} />
+              <Content routes={routes} isCollapsed={false} />
             </Scrollbars>
           </DrawerBody>
         </DrawerContent>
