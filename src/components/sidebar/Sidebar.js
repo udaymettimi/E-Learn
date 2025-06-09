@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 // chakra imports
 import {
@@ -25,11 +26,34 @@ import PropTypes from "prop-types";
 
 // Assets
 import { IoMenuOutline } from "react-icons/io5";
-import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
 function Sidebar(props) {
   const { routes } = props;
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true); // Start collapsed
+  const [isHovered, setIsHovered] = useState(false);
+  const location = useLocation();
+
+  // Auto-collapse sidebar when route changes (when user clicks a link)
+  useEffect(() => {
+    setIsCollapsed(true);
+    setIsHovered(false);
+  }, [location.pathname]);
+
+  // Handle click outside to collapse
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const sidebar = document.getElementById('main-sidebar');
+      if (sidebar && !sidebar.contains(event.target)) {
+        setIsCollapsed(true);
+        setIsHovered(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   let variantChange = "0.3s ease";
   let shadow = useColorModeValue(
@@ -39,44 +63,33 @@ function Sidebar(props) {
   // Chakra Color Mode
   let sidebarBg = useColorModeValue("white", "navy.800");
   let sidebarMargins = "0px";
-  let toggleButtonColor = useColorModeValue("gray.400", "white");
+
+  const shouldExpand = isHovered || !isCollapsed;
 
   // SIDEBAR
   return (
     <Box display={{ sm: "none", xl: "block" }} w="100%" position='fixed' minH='100%'>
       <Box
+        id="main-sidebar"
         bg={sidebarBg}
         transition={variantChange}
-        w={isCollapsed ? '80px' : '300px'}
+        w={shouldExpand ? '300px' : '80px'}
         h='100vh'
         m={sidebarMargins}
         minH='100%'
         overflowX='hidden'
         boxShadow={shadow}
-        position="relative">
-        
-        {/* Toggle Button */}
-        <IconButton
-          icon={<Icon as={isCollapsed ? MdChevronRight : MdChevronLeft} />}
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          position="absolute"
-          top="20px"
-          right="-12px"
-          size="sm"
-          borderRadius="full"
-          bg={sidebarBg}
-          color={toggleButtonColor}
-          boxShadow={shadow}
-          zIndex={10}
-          _hover={{ bg: useColorModeValue("gray.50", "navy.700") }}
-        />
+        position="relative"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        zIndex={1000}>
 
         <Scrollbars
           autoHide
           renderTrackVertical={renderTrack}
           renderThumbVertical={renderThumb}
           renderView={renderView}>
-          <Content routes={routes} isCollapsed={isCollapsed} />
+          <Content routes={routes} isCollapsed={!shouldExpand} />
         </Scrollbars>
       </Box>
     </Box>
