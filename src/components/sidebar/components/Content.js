@@ -9,34 +9,61 @@ import React from "react";
 // FUNCTIONS
 
 function SidebarContent(props) {
-  const { routes, isCollapsed = false } = props;
+  const { routes, isCollapsed = false, contentVisible = true } = props;
+
+  const smoothTransition = "all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1)";
+
   // SIDEBAR
   return (
-    <Flex 
-      direction='column' 
-      height='100%' 
-      pt='25px' 
+    <Flex
+      direction='column'
+      height='100%'
+      pt='25px'
       px={isCollapsed ? "8px" : "12px"}
-      borderRadius='30px' 
-      maxW={isCollapsed ? '80px' : '300px'} 
+      borderRadius='30px'
+      maxW={isCollapsed ? '80px' : '300px'}
       minW={isCollapsed ? '60px' : '280px'}
-      transition="all 0.3s ease"
+      transition={smoothTransition}
+      transform={isCollapsed ? "scale(0.98)" : "scale(1)"}
     >
-      <Brand isCollapsed={isCollapsed} />
-      <Stack direction='column' mb='auto' mt='8px'>
-        <Box ps={isCollapsed ? '4px' : '12px'} pe={isCollapsed ? '4px' : { md: "8px", "2xl": "1px" }}>
+      <Box
+        transition={smoothTransition}
+        opacity={contentVisible ? 1 : 0}
+        transform={contentVisible ? "translateY(0)" : "translateY(-5px)"}
+      >
+        <Brand isCollapsed={isCollapsed} />
+      </Box>
+
+      <Stack
+        direction='column'
+        mb='auto'
+        mt='8px'
+        transition={smoothTransition}
+        opacity={contentVisible ? 1 : 0}
+        transform={contentVisible ? "translateY(0)" : "translateY(5px)"}
+      >
+        <Box
+          ps={isCollapsed ? '4px' : '12px'}
+          pe={isCollapsed ? '4px' : { md: "8px", "2xl": "1px" }}
+          transition={smoothTransition}
+        >
           <Links routes={routes} isCollapsed={isCollapsed} />
         </Box>
       </Stack>
 
-      {!isCollapsed && (
-        <Box
-          mt='60px'
-          mb='40px'
-          borderRadius='30px'>
-          <SidebarCard />
-        </Box>
-      )}
+      <Box
+        mt='60px'
+        mb='40px'
+        borderRadius='30px'
+        transition={smoothTransition}
+        opacity={contentVisible && !isCollapsed ? 1 : 0}
+        transform={contentVisible && !isCollapsed ? "translateY(0) scale(1)" : "translateY(15px) scale(0.9)"}
+        visibility={contentVisible && !isCollapsed ? "visible" : "hidden"}
+        height={contentVisible && !isCollapsed ? "auto" : "0"}
+        overflow="hidden"
+      >
+        {!isCollapsed && <SidebarCard />}
+      </Box>
     </Flex>
   );
 }
