@@ -1,13 +1,11 @@
 // Chakra Imports
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Link, Text, useColorModeValue, useColorMode, IconButton } from '@chakra-ui/react';
-import { SunIcon, MoonIcon } from '@chakra-ui/icons';
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Link, Text, useColorModeValue } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import AdminNavbarLinks from 'components/navbar/NavbarLinksAdmin';
 
 export default function AdminNavbar(props) {
 	const [ scrolled, setScrolled ] = useState(false);
-	const { colorMode, toggleColorMode } = useColorMode();
 
 	useEffect(() => {
 		window.addEventListener('scroll', changeNavbar);
@@ -113,14 +111,6 @@ export default function AdminNavbar(props) {
 						secondary={props.secondary}
 						fixed={props.fixed}
 						scrolled={scrolled}
-					/>
-					<IconButton
-						aria-label="Toggle color mode"
-						icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-						onClick={toggleColorMode}
-						ml={4}
-						size="md"
-						isRound={true}
 					/>
 				</Box>
 			</Flex>
