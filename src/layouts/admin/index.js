@@ -1,5 +1,5 @@
 // Chakra imports
-import { Portal, Box, useDisclosure } from '@chakra-ui/react';
+import { Box, useDisclosure } from '@chakra-ui/react';
 import Footer from 'components/footer/FooterAdmin.js';
 // Layout components
 import Navbar from 'components/navbar/NavbarAdmin.js';
@@ -106,64 +106,62 @@ export default function Dashboard(props) {
   const { onOpen } = useDisclosure();
   document.documentElement.dir = 'ltr';
   return (
-    <Box w="100vw" minH="100vh" display="flex" flexDirection="row">
-      <SidebarContext.Provider
-        value={{
-          sidebarCollapsed,
-          setSidebarCollapsed,
-        }}
-      >
-        <Sidebar
-          routes={routes}
-          collapsed={sidebarCollapsed}
-          setCollapsed={setSidebarCollapsed}
-          {...rest}
-        />
-      </SidebarContext.Provider>
-      <Box
-        as="main"
-        flex="1"
-        minH="100vh"
-        height="100%"
-        overflow="auto"
-        position="relative"
-        transition="margin-left 0.3s cubic-bezier(0.685, 0.0473, 0.346, 1)"
-        marginLeft={sidebarCollapsed ? "80px" : "300px"}
-      >
-        <Portal>
+    <>
+      <Navbar
+        onOpen={onOpen}
+        logoText={'Horizon UI Dashboard PRO'}
+        brandText={getActiveRoute(routes)}
+        secondary={getActiveNavbar(routes)}
+        message={getActiveNavbarText(routes)}
+        fixed={true}
+        {...rest}
+      />
+      <Box w="100vw" minH="100vh" display="flex" flexDirection="row" pt="75px">
+        <SidebarContext.Provider
+          value={{
+            sidebarCollapsed,
+            setSidebarCollapsed,
+          }}
+        >
+          <Sidebar
+            routes={routes}
+            collapsed={sidebarCollapsed}
+            setCollapsed={setSidebarCollapsed}
+            {...rest}
+          />
+        </SidebarContext.Provider>
+        <Box
+          as="main"
+          flex="1"
+          minH="100vh"
+          height="100%"
+          overflow="auto"
+          position="relative"
+          transition="margin-left 0.3s cubic-bezier(0.685, 0.0473, 0.346, 1)"
+          marginLeft={{ base: '0px', md: '0px', lg: '0px', xl: sidebarCollapsed ? "80px" : "300px" }}
+        >
+          {getRoute() ? (
+            <Box
+              mx="auto"
+              p={{ base: '20px', md: '30px' }}
+              pe="20px"
+              minH="100vh"
+              pt="50px"
+            >
+              <Routes>
+                {getRoutes(routes)}
+                <Route
+                  path="/"
+                  element={<Navigate to="/admin/default" replace />}
+                />
+              </Routes>
+            </Box>
+          ) : null}
           <Box>
-            <Navbar
-              onOpen={onOpen}
-              logoText={'Horizon UI Dashboard PRO'}
-              brandText={getActiveRoute(routes)}
-              secondary={getActiveNavbar(routes)}
-              message={getActiveNavbarText(routes)}
-              fixed={false}
-              {...rest}
-            />
+            <Footer />
           </Box>
-        </Portal>
-        {getRoute() ? (
-          <Box
-            mx="auto"
-            p={{ base: '20px', md: '30px' }}
-            pe="20px"
-            minH="100vh"
-            pt="50px"
-          >
-            <Routes>
-              {getRoutes(routes)}
-              <Route
-                path="/"
-                element={<Navigate to="/admin/default" replace />}
-              />
-            </Routes>
-          </Box>
-        ) : null}
-        <Box>
-          <Footer />
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }

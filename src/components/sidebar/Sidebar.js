@@ -13,7 +13,6 @@ import {
   useDisclosure,
   DrawerContent,
   DrawerCloseButton,
-  IconButton,
 } from "@chakra-ui/react";
 import Content from "components/sidebar/components/Content";
 import {
@@ -36,7 +35,6 @@ function Sidebar(props) {
     setCollapsed(true);
   }, [location.pathname, setCollapsed]);
 
-  let variantChange = "0.3s ease";
   let shadow = useColorModeValue(
     "14px 17px 40px 4px rgba(112, 144, 176, 0.08)",
     "unset"
@@ -49,21 +47,21 @@ function Sidebar(props) {
   return (
     <Box
       display={{ sm: "none", xl: "block" }}
-      h="100vh"
-      minH="100vh"
+      h="calc(100vh - 75px)"
+      minH="calc(100vh - 75px)"
       position="fixed"
       left="0"
-      top="0"
-      zIndex={1000}
+      top="75px"
+      zIndex={999}
     >
       <Box
         id="main-sidebar"
         bg={sidebarBg}
         transition="width 0.3s cubic-bezier(0.685, 0.0473, 0.346, 1)"
         w={collapsed ? '80px' : '300px'}
-        h='100vh'
+        h='calc(100vh - 75px)'
         m={sidebarMargins}
-        minH='100vh'
+        minH='calc(100vh - 75px)'
         overflowX='hidden'
         boxShadow={shadow}
         position="relative"
