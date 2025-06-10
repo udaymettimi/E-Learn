@@ -4,7 +4,7 @@ function Card(props) {
   const styles = useStyleConfig("Card", { variant });
 
   return (
-    <Box __css={styles} p={6} borderRadius="lg" boxShadow="md" bg="white" {...rest}>
+    <Box __css={styles} p={6} borderRadius="lg" boxShadow="md" {...rest}>
       {children}
     </Box>
   );

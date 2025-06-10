@@ -79,6 +79,8 @@ export default function Leaderboard() {
   const cardBg = useColorModeValue("white", "gray.800");
 
   const textColor = useColorModeValue("gray.800", "white");
+  const textColorSecondary = useColorModeValue("gray.500", "whiteAlpha.700");
+  const textColorTertiary = useColorModeValue("gray.400", "whiteAlpha.600");
 
   const data = leaderboardData[filter];
   const podium = [data[1], data[0], data[2]]; // 2nd, 1st, 3rd for podium layout
@@ -90,16 +92,16 @@ export default function Leaderboard() {
         <Text fontSize={{ base: "3xl", md: "5xl" }} fontWeight="bold" color={textColor} textAlign="center">
           Leaderboard
         </Text>
-        <Text fontSize="lg" color="gray.500" textAlign="center">
+        <Text fontSize="lg" color={textColorSecondary} textAlign="center">
           Top performers this week
         </Text>
       </VStack>
       <Flex align="center" mb={8} gap={4}>
         <HStack spacing={2}>
-          <Box as="span" color="gray.400" fontSize="lg">
+          <Box as="span" color={textColorTertiary} fontSize="lg">
             <svg width="20" height="20" fill="none"><path d="M7 2v2M13 2v2M3.5 7h13M5 18h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </Box>
-          <Text color="gray.500" fontWeight="medium">Filter by:</Text>
+          <Text color={textColorSecondary} fontWeight="medium">Filter by:</Text>
         </HStack>
         <Select value={filter} onChange={e => setFilter(e.target.value)} maxW="200px" bg={cardBg} borderRadius="md">
           <option value="month">This Month</option>
@@ -159,7 +161,7 @@ export default function Leaderboard() {
             <Text fontWeight="bold" fontSize={idx === 1 ? "2xl" : "xl"} color={textColor}>
               {user.points.toLocaleString()}
             </Text>
-            <Text color="gray.400" fontSize="sm" mb={2}>
+            <Text color={textColorTertiary} fontSize="sm" mb={2}>
               points
             </Text>
           </VStack>
@@ -184,7 +186,7 @@ export default function Leaderboard() {
               _hover={{ boxShadow: "md", transform: "translateY(-2px)", transition: "all 0.2s" }}
             >
               <HStack spacing={4}>
-                <Box fontWeight="bold" color="gray.400" fontSize="xl" minW="40px">
+                <Box fontWeight="bold" color={textColorTertiary} fontSize="xl" minW="40px">
                   #{idx + 4}
                 </Box>
                 <Avatar src={user.avatar} name={user.name} size="md" />
@@ -196,7 +198,7 @@ export default function Leaderboard() {
                     <Badge colorScheme={user.level === "Expert" ? "purple" : user.level === "Advanced" ? "blue" : "green"} variant="subtle" fontSize="sm" borderRadius="md">
                       {user.level}
                     </Badge>
-                    <Text color="gray.400" fontSize="sm">
+                    <Text color={textColorTertiary} fontSize="sm">
                       Level {idx + 4 + 5}
                     </Text>
                   </HStack>
@@ -206,7 +208,7 @@ export default function Leaderboard() {
                 <Text fontWeight="bold" fontSize="2xl" color={textColor}>
                   {user.points.toLocaleString()}
                 </Text>
-                <Text color="gray.400" fontSize="sm">
+                <Text color={textColorTertiary} fontSize="sm">
                   points
                 </Text>
               </Box>

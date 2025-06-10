@@ -29,7 +29,7 @@ import { MdArrowForward } from "react-icons/md";
 function Home() {
   const textColor = useColorModeValue("gray.700", "white");
   const brandColor = useColorModeValue("brand.500", "brand.400");
-  const bgColor = useColorModeValue("white", "navy.700");
+  // const bgColor = useColorModeValue("white", "navy.700");
   const bgGradient = useColorModeValue(
     "linear(to-r, brand.300, brand.500)",
     "linear(to-r, brand.400, brand.600)"
@@ -234,11 +234,10 @@ function Home() {
               rating: 4.7
             }
           ].map((course, index) => (
-            <Box 
+            <Card 
               key={index} 
               borderRadius="xl" 
               overflow="hidden" 
-              bg={bgColor}
               shadow="md"
               _hover={{ 
                 shadow: "xl",
@@ -249,33 +248,34 @@ function Home() {
               <Image 
                 src={course.image} 
                 alt={course.title} 
-                w="100%" 
-                h="160px" 
+                h="180px" 
                 objectFit="cover" 
+                w="100%" 
+                mb="15px"
               />
               <Box p="20px">
-                <Heading as="h3" size="md" mb="10px" color={textColor} noOfLines={2}>
+                <Heading as="h4" size="md" mb="10px" color={textColor}>
                   {course.title}
                 </Heading>
-                <HStack mb="15px">
-                  <Text fontSize="sm" fontWeight="bold" color={brandColor}>
-                    {course.level}
-                  </Text>
-                  <Text fontSize="sm" color="gray.500">
-                    • {course.duration}
-                  </Text>
-                </HStack>
-                <Flex justify="space-between" align="center">
+                <HStack spacing="10px" mb="10px" color="gray.500" fontSize="sm">
                   <HStack>
-                    <Icon as={FiStar} color="yellow.400" />
-                    <Text fontWeight="bold">{course.rating}</Text>
+                    <Icon as={FiBookOpen} />
+                    <Text>{course.level}</Text>
                   </HStack>
-                  <Button size="sm" colorScheme="brand" variant="outline">
-                    Enroll Now
-                  </Button>
-                </Flex>
+                  <HStack>
+                    <Icon as={FiLayers} />
+                    <Text>{course.duration}</Text>
+                  </HStack>
+                  <HStack>
+                    <Icon as={FiStar} />
+                    <Text>{course.rating} ({Math.floor(course.rating * 100)} ratings)</Text>
+                  </HStack>
+                </HStack>
+                <Button size="sm" colorScheme="brand" variant="outline">
+                  Start Course
+                </Button>
               </Box>
-            </Box>
+            </Card>
           ))}
         </SimpleGrid>
       </Card>
@@ -342,32 +342,22 @@ function Home() {
         </SimpleGrid>
       </Card>
 
-      {/* CTA Section */}
-      <Card 
-        mb="20px" 
-        bgGradient={bgGradient}
+      {/* Call to Action Section */}
+      <Card
+        p={{ base: "20px", md: "40px" }}
+        textAlign="center"
+        bg={bgGradient}
         color="white"
-        p={{ base: "30px", md: "50px" }}
       >
-        <Grid templateColumns={{ base: "1fr", md: "2fr 1fr" }} gap="30px" alignItems="center">
-          <Box>
-            <Heading as="h2" size="xl" mb="20px">
-              Ready to Start Your Learning Journey?
-            </Heading>
-            <Text fontSize="lg" mb="30px" opacity="0.9">
-              Join thousands of students who are already advancing their careers with PyGenicArc. Get started today and take the first step towards mastering programming.
-            </Text>
-          </Box>
-          <Flex justify={{ base: "flex-start", md: "flex-end" }}>
-            <Button 
-              size="lg" 
-              colorScheme="whiteAlpha" 
-              rightIcon={<MdArrowForward />}
-            >
-              Get Started Now
-            </Button>
-          </Flex>
-        </Grid>
+        <Heading as="h2" size="xl" mb="15px">
+          Ready to Start Your Learning Journey?
+        </Heading>
+        <Text fontSize="lg" mb="30px">
+          Join thousands of students and unlock your potential with our comprehensive courses.
+        </Text>
+        <Button size="lg" colorScheme="whiteAlpha" variant="solid">
+          Sign Up Today
+        </Button>
       </Card>
 
       {/* Learning Paths Section */}

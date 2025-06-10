@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, VStack, SimpleGrid } from "@chakra-ui/react";
+import { Box, VStack, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import LearningGoalCard from "../../../components/myLearning/LearningGoalCard";
 import SmartRevisionCard from "../../../components/myLearning/SmartRevisionCard";
 import LearningPathCard from "../../../components/myLearning/LearningPathCard";
@@ -9,8 +9,10 @@ import InProgressCoursesCard from "../../../components/myLearning/InProgressCour
 import CompletedCoursesCard from "../../../components/myLearning/CompletedCoursesCard";
 
 const MyLearning = () => {
+  const bgColor = useColorModeValue("gray.50", "navy.900");
+
   return (
-    <Box minH="100vh" bg="gray.50" p={4}>
+    <Box minH="100vh" bg={bgColor} p={4}>
       <VStack spacing={6} align="stretch">
         <LearningGoalCard />
         <SmartRevisionCard />

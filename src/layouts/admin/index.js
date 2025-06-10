@@ -8,6 +8,7 @@ import { SidebarContext } from 'contexts/SidebarContext';
 import React, { useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import routes from 'routes.js';
+import AIAssistant from 'components/AIAssistant';
 
 // Custom Chakra theme
 export default function Dashboard(props) {
@@ -162,6 +163,7 @@ export default function Dashboard(props) {
           </Box>
         </Box>
       </Box>
+      <AIAssistant />
     </>
   );
 }

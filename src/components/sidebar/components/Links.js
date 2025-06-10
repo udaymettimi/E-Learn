@@ -58,7 +58,10 @@ export function SidebarLinks(props) {
             {createLinks(route.items)}
           </React.Fragment>
         );
-      } else if (
+      }
+      if (route.hidden) return null;
+
+      if (
         route.layout === "/admin" ||
         route.layout === "/auth" ||
         route.layout === "/rtl"

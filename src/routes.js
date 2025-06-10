@@ -19,6 +19,7 @@ import MyLearning from "views/admin/myLearning";
 import Leaderboard from "views/admin/leaderboard";
 import Home from "views/admin/home";
 import Roadmap from "views/admin/roadmap";
+import CourseDetail from "views/admin/courses/CourseDetail";
 
 // Auth Imports
 
@@ -36,6 +37,13 @@ const routes = [
     path: "/my-learning",
     icon: <Icon as={MdSchool} width="20px" height="20px" color="inherit" />,
     component: <MyLearning />,
+  },
+  {
+    name: "Course Detail",
+    layout: "/admin",
+    path: "/courses/:courseId",
+    component: <CourseDetail />,
+    hidden: true,
   },
   {
     name: "Roadmap",

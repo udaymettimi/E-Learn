@@ -11,8 +11,16 @@ import { linkStyles } from "./components/link";
 import { breakpoints } from "./foundations/breakpoints";
 import { globalStyles } from "./styles";
 
+const config = {
+  initialColorMode: "light",
+  useSystemColorMode: false,
+};
+
 export default extendTheme(
-  { breakpoints }, // Breakpoints
+  { 
+    config,
+    breakpoints 
+  }, // Breakpoints
   globalStyles,
   badgeStyles, // badge styles
   buttonStyles, // button styles
